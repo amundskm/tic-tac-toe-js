@@ -1,7 +1,8 @@
 
-
 const gameBoard = (() => {
-  const display = [ ];
+  const display = [ "", "", "",
+                    "", "", "",
+                   "", "", "" ];
   
   
   return {display};
@@ -9,15 +10,20 @@ const gameBoard = (() => {
   
 })();
 
+// object for creating players
 const playerFactory = ( name, symbol) => {
-  // here define who won, then display?
+  
   
   return { name, symbol};
 }
 
 
 // object to control flow of the game itself
-const game = (() => {
+const gameController = (() => {
+  const winner = null;
+  // start with player one
+  //const currentPlayer = playerOne;
+
   // display symbols on the board
   const render = function(){
     let cells = document.querySelectorAll('.cell');
@@ -30,7 +36,7 @@ const game = (() => {
 
   // add new symbol on the board
   const makeMove = ((player, board) => {
-    
+   
     const gameBoardDiv = document.querySelector('.gameboard');
     
     gameBoardDiv.addEventListener("click", function(e){
@@ -40,13 +46,73 @@ const game = (() => {
             // get cell number
             const cellNb = e.target.dataset.cell;
             board[cellNb-1] = player.symbol;
-            e.target.innerText = player.symbol;
+            render()
+            // check if win/draw
+            if (checkBoard(board)===true){
+              // change player 
+              player = changePlayer(player);
+              
+            } 
+            // // change player 
+            // player = changePlayer(player);
+            
+            
+            //e.target.innerText = player.symbol;
             console.log(board)
+            
           }
       
     });
-  })    
-   return {render, makeMove}
+  })
+
+  // check for winning conditions
+  function checkBoard(board,player){
+    console.log(board[0], board[1], board[2])
+    let keepPlaying = false;
+    //const winningSymbol;
+    // check rows
+    if ((board[0] === board[1] === board[2]) ||
+        (board[3] === board[4] === board[5]) || 
+        (board[6] === board[7] === board[8])
+        ){
+          console.log("rows")
+          alert(`the winner is ${player.name}`)
+          return keepPlaying;
+    } 
+    // check columns
+    else if (board[0] === board[3] === board[6] ||
+      board[1] === board[4] === board[7] || 
+      board[2] === board[5] === board[8]
+      ){
+        alert(`the winner is ${player.name}`)
+        console.log("columns")
+        return keepPlaying;
+    }
+    // check diagonals
+    else if (board[0] === board[4] === board[8] ||
+      board[2] === board[4] === board[6] 
+      ){
+        console.log("diagonals")
+         alert(`the winner is ${player.name}`)
+        return keepPlaying; 
+    }
+
+    return keepPlaying=true;
+  }
+
+
+  // change player
+  function changePlayer(currentPlayer){
+    if (currentPlayer === playerOne){
+      currentPlayer = playerTwo
+    } else{
+      currentPlayer = playerOne
+    }
+    return currentPlayer;
+  }
+  
+  
+  return {render, makeMove}
 })();
 
 
@@ -56,6 +122,7 @@ const game = (() => {
 const playerOne = playerFactory("Aga","X");
 const playerTwo = playerFactory("Rad","O");
 
+// first move for playerOne
+gameController.makeMove(playerOne, gameBoard.display);
 
-game.makeMove(playerTwo, gameBoard.display)
 
