@@ -48,11 +48,13 @@ const gameController = (() => {
             board[cellNb-1] = player.symbol;
             render()
             // check if win/draw
-            if (checkBoard(board)===true){
+            if (checkBoard(board,player)===true){
               // change player 
               player = changePlayer(player);
               
-            } 
+            } else {
+              alert(`the winner is ${player.name}`)
+            }
             // // change player 
             // player = changePlayer(player);
             
@@ -71,30 +73,29 @@ const gameController = (() => {
     let keepPlaying = false;
     //const winningSymbol;
     // check rows
-    if ((board[0] === board[1] === board[2]) ||
-        (board[3] === board[4] === board[5]) || 
-        (board[6] === board[7] === board[8])
+    if ((board[0] === board[1] && board[0]=== board[2] && board[0] !== "") ||
+        (board[3] === board[4] && board[3] === board[5] && board[3] !== "") || 
+        (board[6] === board[7] && board[6]=== board[8] && board[6] !== "")
         ){
           console.log("rows")
-          alert(`the winner is ${player.name}`)
+          //alert(`the winner is ${player.name}`)
           return keepPlaying;
     } 
     // check columns
-    else if (board[0] === board[3] === board[6] ||
-      board[1] === board[4] === board[7] || 
-      board[2] === board[5] === board[8]
+    else if ((board[0] === board[3] && board[0]=== board[6] && board[0] !== "") ||
+      (board[1] === board[4] && board[1] === board[7] && board[1] !== "") || 
+      (board[2] === board[5] && board[2] === board[8] && board[2] !== "")
       ){
-        alert(`the winner is ${player.name}`)
+        
         console.log("columns")
         return keepPlaying;
     }
     // check diagonals
-    else if (board[0] === board[4] === board[8] ||
-      board[2] === board[4] === board[6] 
+    else if ((board[0] === board[4] && board[0] === board[8] && board[0] !== "") ||
+      (board[2] === board[4] && board[2]=== board[6] && board[2] !== "")
       ){
         console.log("diagonals")
-         alert(`the winner is ${player.name}`)
-        return keepPlaying; 
+                 return keepPlaying; 
     }
 
     return keepPlaying=true;
