@@ -36,7 +36,7 @@ const gameController = (() => {
 
   // add new symbol on the board
   const makeMove = ((player, board) => {
-   
+    
     const gameBoardDiv = document.querySelector('.gameboard');
     
     gameBoardDiv.addEventListener("click", function(e){
@@ -48,16 +48,24 @@ const gameController = (() => {
             board[cellNb-1] = player.symbol;
             render()
             // check if win/draw
-            if (checkBoard(board,player)===true){
-              // change player 
-              player = changePlayer(player);
+            if (winningMove(board)===true){
               
-            } else {
-              alert(`the winner is ${player.name}`)
+              console.log(`the winner is ${player.name}`)
+              // remove eventListner
+
+              
+            } 
+            // check if draw
+            if (board.includes("") === false){
+              alert("tie!")
             }
-            // // change player 
-            // player = changePlayer(player);
             
+            // change player 
+            else {
+              
+              player = changePlayer(player);
+            }
+          
             
             //e.target.innerText = player.symbol;
             console.log(board)
@@ -66,20 +74,19 @@ const gameController = (() => {
       
     });
   })
-
-  // check for winning conditions
-  function checkBoard(board,player){
-    console.log(board[0], board[1], board[2])
-    let keepPlaying = false;
-    //const winningSymbol;
+  
+  
+ // check for winning conditions
+  function winningMove(board){
+           
     // check rows
     if ((board[0] === board[1] && board[0]=== board[2] && board[0] !== "") ||
         (board[3] === board[4] && board[3] === board[5] && board[3] !== "") || 
         (board[6] === board[7] && board[6]=== board[8] && board[6] !== "")
         ){
           console.log("rows")
-          //alert(`the winner is ${player.name}`)
-          return keepPlaying;
+          
+          return true;
     } 
     // check columns
     else if ((board[0] === board[3] && board[0]=== board[6] && board[0] !== "") ||
@@ -88,17 +95,18 @@ const gameController = (() => {
       ){
         
         console.log("columns")
-        return keepPlaying;
+        return true;
     }
     // check diagonals
     else if ((board[0] === board[4] && board[0] === board[8] && board[0] !== "") ||
       (board[2] === board[4] && board[2]=== board[6] && board[2] !== "")
+
       ){
         console.log("diagonals")
-                 return keepPlaying; 
+        return true; 
     }
 
-    return keepPlaying=true;
+    return false;
   }
 
 
