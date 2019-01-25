@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css?family=Caveat:400,700");
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Caveat", cursive;
+  background: #ececec;
+  color: #244650;
+}
+
+.container {
+  max-width: 900px;
+  margin: 2em auto;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Caveat", cursive;
+  font-size: 3em;
+  color: #4f97ad;
+}
+
+.players-score {
+  width: 50%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  background: #d8d9d8;
+  color: #4f97ad;
+}
+.players-score .vs {
+  font-size: 2.5em;
+}
+.players-score div:nth-child(2) {
+  font-size: 2.5em;
+}
+
+.message {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 2em 1em 1em 1em;
+}
+
+.gameboard {
+  max-width: 600px;
+  max-height: 600px;
+  display: none;
+  margin: auto;
+  grid-template-columns: repeat(3, minmax(5rem, 1fr));
+  grid-template-rows: repeat(3, minmax(5rem, 1fr));
+}
+
+.cell {
+  border: 1px solid #4f97ad;
+  padding: 1rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid #4f97ad;
+  border-radius: 3px;
+  background: #accfda;
+  color: #1d363d;
+  transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+  color: #cee5ec;
+  background: #386f7e;
+}
+.btn--reset {
+  display: none;
+}
+
+/*# sourceMappingURL=main.css.map */
