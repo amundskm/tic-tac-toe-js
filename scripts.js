@@ -8,6 +8,9 @@ const cellsArr = Array.from(cells);
 
 const btnStart = document.querySelector('.btn--start');
 const btnReset = document.querySelector('.btn--reset');
+const playerOneScore = document.querySelector('.player-one.score');
+const playerTwoScore = document.querySelector('.player-two.score');
+
 
 // ==== factory functions =====
 const gameBoard = (() => {
@@ -31,14 +34,14 @@ const gameBoard = (() => {
 })();
 
 // object for creating players
-const player = ( name, marker) => {
-  
-  return { name, marker};
+const player = (marker) => {
+  let score = 0;
+  return { marker, score};
 }
 
 // players 
-const playerOne = player("Aga","X");
-const playerTwo = player("Rad","O");
+const playerOne = player("X");
+const playerTwo = player("O");
 
 // object to control flow of the game itself
 const gameController = (() => {
@@ -62,10 +65,14 @@ const gameController = (() => {
         // check for win
         if (gameWon === true){
           
-          msgDiv.innerText = `${currentPlayer.name} won!`;
+          msgDiv.innerText = `${currentPlayer.marker} won!`;
+          currentPlayer.score += 1;
 
+          displayScore()
           // remove event listener from gameboard
           cellsArr.forEach(cell => cell.removeEventListener("click", gameController.nextMove));
+
+          
 
         } // check for draw
         else if (gameWon === false &&  board.includes("") ===false ) {
@@ -144,23 +151,36 @@ const gameController = (() => {
     }
 
   }
-  
+  function displayScore(){
+    playerOneScore.innerText = playerOne.score;
+    playerTwoScore.innerText = playerTwo.score;
+  }
    return {nextMove}
 })();
 
 
 // ==== event listeners =====
 
-cellsArr.forEach(cell => cell.addEventListener("click", gameController.nextMove));
-btnReset.addEventListener("click", gameBoard.init);
+
+btnReset.addEventListener("click", function(){
+  //reset gameboard
+  gameBoard.display = [ "", "", "",
+  "", "", "",
+ "", "", "" ];
+  gameBoard.init();
+  cellsArr.forEach(cell => cell.addEventListener("click", gameController.nextMove));
+
+});
 
 btnStart.addEventListener("click", function(){
   gameBoardDiv.style.display = "grid";
   gameBoard.init();
+  btnStart.style.display = "none";
+  btnReset.style.display = "block";
+  cellsArr.forEach(cell => cell.addEventListener("click", gameController.nextMove));
 })
 
-
-
+gameController.displayScore;
 
 
 
